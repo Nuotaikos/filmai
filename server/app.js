@@ -18,6 +18,20 @@ const con = mysql.createConnection({
   database: "filmai",
 });
 
+// CATEGORIES
+app.post("/admin/cats", (req, res) => {
+  const sql = `
+  INSERT INTO cats
+  (title)
+  VALUES (?)
+  `;
+  con.query(sql, [req.body.title], (err, result) => {
+    if (err) throw err;
+    res.send({ result, msg: { text: 'OK, new Cat was created', type: 'success' } });
+  });
+});
+
+
 app.listen(port, () => {
   console.log(`Filmus rodo portas Nr ${port}`);
 });
