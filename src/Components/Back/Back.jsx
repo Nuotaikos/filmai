@@ -9,8 +9,14 @@ function Back({ show }) {
 
   const [lastUpdate, setLastUpdate] = useState(Date.now());
 
-  const [cats, setCats] = useState(null); //cats atiduodam provaideriui
+  // const [messages, setMessages] = useState([]); //masyvas tuscias, nes nezinome
+  const [messages, setMessages] = useState([ //taip parasyta, kad tureti vizuala. Veliau perkoduosim
+    { id: 4444, text: 'valio', type: 'danger' },
+    { id: 444, text: 'labas', type: 'info' },
+    { id: 44, text: 'Visogero', type: 'success' },
+  ]);
 
+  const [cats, setCats] = useState(null); //cats atiduodam provaideriui
   const [createCat, setCreateCat] = useState(null);
   const [deleteCat, setDeleteCat] = useState(null);
 
@@ -55,8 +61,8 @@ function Back({ show }) {
     <BackContext.Provider value={{
       setCreateCat,
       cats,
-      setDeleteCat
-      // messages,
+      setDeleteCat,
+      messages
       // setEditCat,
       // setModalCat,
       // modalCat,
