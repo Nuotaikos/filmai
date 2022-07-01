@@ -1,11 +1,27 @@
+import { NavLink } from "react-router-dom";
+
 function Nav() {
   return (
     <>
       <nav className="nav">
-        <a className="nav-link active" href="#">Active</a>
-        <a className="nav-link" href="#">Link</a>
-        <a className="nav-link" href="#">Link</a>
-        <a className="nav-link disabled">Disabled</a>
+        <NavLink to="/admin/" className="nav-link" style={
+          ({ isActive }) =>
+            isActive ? {
+              color: 'crimson'
+            } : null
+        }>Admin</NavLink>
+        <NavLink to="/admin/cats" className="nav-link" style={
+          ({ isActive }) =>
+            isActive ? {
+              color: 'crimson'
+            } : null
+        }>Categories</NavLink>
+        <NavLink to="/admin/movies" className="nav-link" style={
+          ({ isActive }) =>
+            isActive ? {
+              color: 'crimson'
+            } : null
+        }>Movies</NavLink>
       </nav>
     </>
   );
