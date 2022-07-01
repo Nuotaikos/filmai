@@ -18,7 +18,7 @@ function Line({ line }) {
       <div className="item">
         <div className="content">
           <b>{line.title}</b>
-          <span>{['Documentary', 'Family', 'Animation', 'Drama', 'Horror']}</span>
+          {/* <span>{['Documentary', 'Family', 'Animation', 'Drama', 'Horror']}</span> */}
         </div>
         <div className="buttons">
           <button type="button" className="btn btn-outline-success ml-2" onClick={handleEdit}>Edit</button>
