@@ -49,7 +49,7 @@ function Back({ show }) {
             <h1>BACK</h1>
           </>
           : show === 'cats' ? <CatsCrud /> :
-            show === 'products' ? <MoviesCrud /> : null
+            show === 'movies' ? <MoviesCrud /> : null
       }
     </BackContext.Provider>
   )
