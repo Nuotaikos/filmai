@@ -1,12 +1,16 @@
 import CatsCrud from './Cats/Crud';
 import MoviesCrud from './Movies/Crud';
+import Nav from './Nav';
 
 function Back({ show }) {
 
 
   if (show === "admin") {
     return (
-      <h1>BACK</h1>
+      <>
+        <Nav />
+        <h1>BACK</h1>
+      </>
     )
   }
   if (show === "cats") {

@@ -19,5 +19,5 @@ const con = mysql.createConnection({
 });
 
 app.listen(port, () => {
-  console.log(`Lape klauso 1-front porto Nr ${port}`);
+  console.log(`Filmus rodo portas Nr ${port}`);
 });
