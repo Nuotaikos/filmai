@@ -20,6 +20,8 @@ function Back({ show }) {
   const [cats, setCats] = useState(null); //cats atiduodam provaideriui
   const [createCat, setCreateCat] = useState(null);
   const [deleteCat, setDeleteCat] = useState(null);
+  const [editCat, setEditCat] = useState(null);
+  const [modalCat, setModalCat] = useState(null);
 
   // Read
   useEffect(() => {
@@ -69,10 +71,10 @@ function Back({ show }) {
       setCreateCat,
       cats,
       setDeleteCat,
-      messages
-      // setEditCat,
-      // setModalCat,
-      // modalCat,
+      messages,
+      setEditCat,
+      setModalCat,
+      modalCat
       // setCreateProduct
     }}>
       {

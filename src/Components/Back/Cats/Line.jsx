@@ -3,14 +3,14 @@ import BackContext from '../BackContext';
 
 function Line({ line }) {
 
-  const { setDeleteCat } = useContext(BackContext);
+  const { setDeleteCat, setModalCat } = useContext(BackContext);
 
   const handleDelete = () => {
     setDeleteCat(line);
   }
 
   const handleEdit = () => {
-    // setModalCat(line);
+    setModalCat(line);
   }
 
   return (
