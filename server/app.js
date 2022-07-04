@@ -56,6 +56,19 @@ app.delete("/admin/cats/:id", (req, res) => {
   });
 });
 
+// Edit
+app.put("/admin/cats/:id", (req, res) => {
+  const sql = `
+  UPDATE cats
+  SET title = ?
+  WHERE id = ?
+  `;
+  con.query(sql, [req.body.title, req.params.id], (err, result) => {
+    if (err) throw err;
+    res.send({ result, msg: { text: 'OK, Cat updated. Now it is as new', type: 'success' } });
+  });
+});
+
 app.listen(port, () => {
   console.log(`Filmus rodo portas Nr ${port}`);
 });
