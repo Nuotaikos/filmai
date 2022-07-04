@@ -4,17 +4,18 @@ import BackContext from './BackContext';
 import CatsCrud from './Cats/Crud';
 import MoviesCrud from './Movies/Crud';
 import Nav from './Nav';
+import { v4 as uuidv4 } from 'uuid';
 
 function Back({ show }) {
 
   const [lastUpdate, setLastUpdate] = useState(Date.now());
 
-  // const [messages, setMessages] = useState([]); //masyvas tuscias, nes nezinome
-  const [messages, setMessages] = useState([ //taip parasyta, kad tureti vizuala. Veliau perkoduosim
-    { id: 4444, text: 'valio', type: 'danger' },
-    { id: 444, text: 'labas', type: 'info' },
-    { id: 44, text: 'Visogero', type: 'success' },
-  ]);
+  const [messages, setMessages] = useState([]); //masyvas tuscias, nes nezinome
+  // const [messages, setMessages] = useState([ //taip parasyta, kad tureti vizuala. Veliau perkoduosim
+  //   { id: 4444, text: 'valio', type: 'danger' },
+  //   { id: 444, text: 'labas', type: 'info' },
+  //   { id: 44, text: 'Visogero', type: 'success' },
+  // ]);
 
   const [cats, setCats] = useState(null); //cats atiduodam provaideriui
   const [createCat, setCreateCat] = useState(null);
@@ -53,9 +54,15 @@ function Back({ show }) {
       })
   }, [deleteCat]);
 
-  const showMessage = () => {
-
+  const showMessage = (m) => {
+    const id = uuidv4();
+    m.id = id;
+    setMessages(msg => [...msg, m]);
+    setTimeout(() => {
+      setMessages(mes => mes.filter(ms => ms.id !== id))
+    }, 3000);
   }
+
 
   return (
     <BackContext.Provider value={{
