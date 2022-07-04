@@ -23,7 +23,7 @@ function Create() {
           <label>Movie category</label>
           {/* <input type="text" className="form-control" onChange={e => setTitle(e.target.value)} value={title} /> */}
           <select className="form-control" onChange={e => setTitle(e.target.value)} value={title}>
-            <option value="0" disabled >Please, select your Category</option>
+            <option value="0" >Please, select your Category</option>
             <option value="Documentary">Documentary</option>
             <option value="Family">Family</option>
             <option value="Animation">Animation</option>

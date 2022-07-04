@@ -3,15 +3,30 @@ import BackContext from '../BackContext';
 
 function Create() {
 
-  const { setCreateCat } = useContext(BackContext); //setCreateCat atiduodam  i provider Back.jsx
+  const { cats, setCreateMovie } = useContext(BackContext);
 
   const [title, setTitle] = useState('');
+  const [price, setPrice] = useState('');
+  const [rate, setRate] = useState('10')
+  const [cat, setCat] = useState('0');
 
   const handleCreate = () => {
-    const data = { title };
-    setCreateCat(data); // paimam is const ir pasetinam
+    const data = { title, price: parseFloat(price), rate: parseFloat(rate), cat: parseInt(cat) };
+    setCreateMovie(data); // paimam is const ir pasetinam
     setTitle(''); //nunulinam title
+    setPrice('');
+    setRate(false);
+    setCat('0');
   }
+
+  const rateIt = e => {
+    setRate(e.target.value)
+    // setRateNow({
+    //   rate: parseInt(e.target.value),
+    //   id: title.id
+    // });
+  }
+
 
   return (
     <div className="card mt-4">
@@ -29,12 +44,13 @@ function Create() {
           <input type="text" className="form-control" onChange={e => setPrice(e.target.value)} value={price} />
           <small className="form-text text-muted">Enter price.</small>
         </div>
-        <div className="col-4">
-          <div className="form-group">
-            <label>Movie rating</label>
-            <input category="text" className="form-control" onChange={e => setRating(e, 'rating')} value={rating} />
-            <small className="form-text text-muted">Movie rating.</small>
-          </div>
+        <div className="form-group mt-3">
+          <label className="mr-2">Rate it!</label>
+          <select value={rate} onChange={rateIt}>
+            {
+              [...Array(10)].map((_, i) => <option key={i} value={10 - i}>{10 - i}</option>)
+            }
+          </select>
         </div>
         <div className="form-group">
           <label>Categories</label>

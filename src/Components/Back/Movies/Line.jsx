@@ -18,6 +18,11 @@ function Line({ line }) {
       <div className="item">
         <div className="content">
           <b>{line.title}</b>
+          <b className="ml-4">
+            {
+              line.rate ? 'rate: ' + (line.rate / line.rates).toFixed(2) : '"No rates yet"'
+            }
+          </b>
           {/* <span>{['Documentary', 'Family', 'Animation', 'Drama', 'Horror']}</span> */}
         </div>
         <div className="buttons">

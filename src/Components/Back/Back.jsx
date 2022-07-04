@@ -23,6 +23,8 @@ function Back({ show }) {
   const [editCat, setEditCat] = useState(null);
   const [modalCat, setModalCat] = useState(null);
 
+  const [createMovie, setCreateMovie] = useState(null);
+
   // Read
   useEffect(() => {
     axios.get('http://localhost:3003/admin/cats')
@@ -30,7 +32,7 @@ function Back({ show }) {
   }, [lastUpdate]);
 
 
-  // Create
+  // Create Cat
   useEffect(() => {
     if (null === createCat) return;
     axios.post('http://localhost:3003/admin/cats', createCat) //metodas post. Supostinam, gaunam zinute, kurios kol kas nera 
@@ -42,6 +44,18 @@ function Back({ show }) {
         showMessage({ text: error.message, type: 'danger' });
       })
   }, [createCat]);
+  // Create Movie
+  useEffect(() => {
+    if (null === createMovie) return;
+    axios.post('http://localhost:3003/admin/movies', createMovie)
+      .then(res => {
+        showMessage(res.data.msg);
+        setLastUpdate(Date.now());
+      })
+      .catch(error => {
+        showMessage({ text: error.message, type: 'danger' });
+      })
+  }, [createMovie]);
 
   // Delete
   useEffect(() => {
@@ -87,8 +101,8 @@ function Back({ show }) {
       messages,
       setEditCat,
       setModalCat,
-      modalCat
-      // setCreateProduct
+      modalCat,
+      setCreateMovie
     }}>
       {
         show === 'admin' ?

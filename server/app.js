@@ -18,7 +18,7 @@ const con = mysql.createConnection({
   database: "filmai",
 });
 
-// CATEGORIES
+// CATEGORIES create
 app.post("/admin/cats", (req, res) => {
   const sql = `
   INSERT INTO cats
@@ -31,7 +31,7 @@ app.post("/admin/cats", (req, res) => {
   });
 });
 
-
+//READ CATEGORIES
 app.get("/admin/cats", (req, res) => {
   const sql = `
 SELECT * 
@@ -44,7 +44,7 @@ ORDER BY title
   });
 });
 
-//delete
+//delete CATEGORIES
 app.delete("/admin/cats/:id", (req, res) => {
   const sql = `
   DELETE FROM cats
@@ -56,7 +56,7 @@ app.delete("/admin/cats/:id", (req, res) => {
   });
 });
 
-// Edit
+// Edit CATEGORIES
 app.put("/admin/cats/:id", (req, res) => {
   const sql = `
   UPDATE cats
@@ -69,6 +69,20 @@ app.put("/admin/cats/:id", (req, res) => {
   });
 });
 
+// Movies create
+app.post("/admin/movies", (req, res) => {
+  const sql = `
+  INSERT INTO movies
+  (title, price, rates, cats_id )
+  VALUES (?, ?, ?, ?)
+  `;
+  con.query(sql, [req.body.title, req.body.price, req.body.rates, req.body.cat], (err, result) => {
+    if (err) throw err;
+    res.send({ result, msg: { text: 'OK, new Movie was created', type: 'success' } });
+  });
+});
+
+//m.rates, m.rate_sum, req.body.rates, req.body.rate_sum,
 app.listen(port, () => {
   console.log(`Filmus rodo portas Nr ${port}`);
 });
