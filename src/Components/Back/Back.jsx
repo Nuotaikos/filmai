@@ -23,14 +23,22 @@ function Back({ show }) {
   const [editCat, setEditCat] = useState(null);
   const [modalCat, setModalCat] = useState(null);
 
+  const [movies, setMovies] = useState(null);
   const [createMovie, setCreateMovie] = useState(null);
+  const [deleteMovie, setDeleteMovie] = useState(null);
+  // const [editProduct, setEditProduct] = useState(null);
+  // const [modalProduct, setModalProduct] = useState(null);
 
   // Read
   useEffect(() => {
     axios.get('http://localhost:3003/admin/cats')
       .then(res => setCats(res.data));
   }, [lastUpdate]);
-
+  // Read movies
+  useEffect(() => {
+    axios.get('http://localhost:3003/admin/movies')
+      .then(res => setMovies(res.data));
+  }, [lastUpdate]);
 
   // Create Cat
   useEffect(() => {
@@ -57,7 +65,7 @@ function Back({ show }) {
       })
   }, [createMovie]);
 
-  // Delete
+  // Delete cat
   useEffect(() => {
     if (null === deleteCat) return;
     axios.delete('http://localhost:3003/admin/cats/' + deleteCat.id)
@@ -69,6 +77,19 @@ function Back({ show }) {
         showMessage({ text: error.message, type: 'danger' });
       })
   }, [deleteCat]);
+
+  // Delete movie
+  useEffect(() => {
+    if (null === deleteMovie) return;
+    axios.delete('http://localhost:3003/admin/movies/' + deleteMovie.id)
+      .then(res => {
+        showMessage(res.data.msg);
+        setLastUpdate(Date.now());
+      })
+      .catch(error => {
+        showMessage({ text: error.message, type: 'danger' });
+      })
+  }, [deleteMovie]);
 
   // Edit
   useEffect(() => {
@@ -102,7 +123,10 @@ function Back({ show }) {
       setEditCat,
       setModalCat,
       modalCat,
-      setCreateMovie
+      setCreateMovie,
+      movies,
+      showMessage,
+      setDeleteMovie
     }}>
       {
         show === 'admin' ?

@@ -3,14 +3,14 @@ import BackContext from '../BackContext';
 
 function Line({ line }) {
 
-  const { setDeleteCat, setModalCat } = useContext(BackContext);
+  const { setDeleteMovie } = useContext(BackContext);
 
   const handleDelete = () => {
-    setDeleteCat(line);
+    setDeleteMovie(line);
   }
 
   const handleEdit = () => {
-    setModalCat(line);
+    // setModalCat(line);
   }
 
   return (
@@ -18,11 +18,14 @@ function Line({ line }) {
       <div className="item">
         <div className="content">
           <b>{line.title}</b>
+          <div className="cat">{line.cat}</div>
+          <i>{line.rate_sum}</i>
           <b className="ml-4">
             {
               line.rate ? 'rate: ' + (line.rate / line.rates).toFixed(2) : '"No rates yet"'
             }
           </b>
+          <i>{line.price.toFixed(2)} Eur</i>
           {/* <span>{['Documentary', 'Family', 'Animation', 'Drama', 'Horror']}</span> */}
         </div>
         <div className="buttons">

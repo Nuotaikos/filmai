@@ -81,8 +81,35 @@ app.post("/admin/movies", (req, res) => {
     res.send({ result, msg: { text: 'OK, new Movie was created', type: 'success' } });
   });
 });
-
 //m.rates, m.rate_sum, req.body.rates, req.body.rate_sum,
+
+
+//READ MOVIES
+app.get("/admin/movies", (req, res) => {
+  const sql = `
+SELECT m.id, price, m.title, m.rates, m.rate_sum, c.title AS cat
+FROM movies AS m
+LEFT JOIN cats AS c
+ON c.id = m.cats_id
+ORDER BY title 
+`;
+  con.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+//DELETE MOVIES
+app.delete("/admin/movies/:id", (req, res) => {
+  const sql = `
+  DELETE FROM movies
+  WHERE id = ?
+  `;
+  con.query(sql, [req.params.id], (err, result) => {
+    if (err) throw err;
+    res.send({ result, msg: { text: 'OK, Movie gone', type: 'success' } });
+  });
+});
+
 app.listen(port, () => {
   console.log(`Filmus rodo portas Nr ${port}`);
 });

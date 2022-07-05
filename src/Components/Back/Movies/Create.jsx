@@ -3,7 +3,7 @@ import BackContext from '../BackContext';
 
 function Create() {
 
-  const { cats, setCreateMovie } = useContext(BackContext);
+  const { cats, setCreateMovie, showMessage } = useContext(BackContext);
 
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
@@ -11,6 +11,11 @@ function Create() {
   const [cat, setCat] = useState('0');
 
   const handleCreate = () => {
+    if (cat === '0') {
+      showMessage({ text: 'Please select Category', type: 'danger' });
+      return;
+    }
+
     const data = { title, price: parseFloat(price), rate: parseFloat(rate), cat: parseInt(cat) };
     setCreateMovie(data); // paimam is const ir pasetinam
     setTitle(''); //nunulinam title
@@ -37,7 +42,7 @@ function Create() {
         <div className="form-group">
           <label>Title</label>
           <input type="text" className="form-control" onChange={e => setTitle(e.target.value)} value={title} />
-          <small className="form-text text-muted">Enter your Cat name here.</small>
+          <small className="form-text text-muted">Enter Movie name here.</small>
         </div>
         <div className="form-group">
           <label>Price</label>
@@ -60,7 +65,7 @@ function Create() {
               cats ? cats.map(c => <option key={c.id} value={c.id}>{c.title}</option>) : null
             }
           </select>
-          <small className="form-text text-muted">Select category here.</small>
+          {/* <small className="form-text text-muted">Select category here.</small> */}
         </div>
         <button type="button" className="btn btn-outline-primary" onClick={handleCreate}>Create</button>
       </div>
