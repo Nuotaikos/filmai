@@ -90,7 +90,7 @@ app.post("/admin/movies", (req, res) => {
 //READ MOVIES
 app.get("/admin/movies", (req, res) => {
   const sql = `
-SELECT m.id, price, m.title, m.rates, m.rate_sum, c.title AS cat
+SELECT m.id, price, m.title, m.rates, m.rate_sum, c.title AS cat, photo
 FROM movies AS m
 LEFT JOIN cats AS c
 ON c.id = m.cats_id
@@ -117,10 +117,10 @@ app.delete("/admin/movies/:id", (req, res) => {
 app.put("/admin/movies/:id", (req, res) => {
   const sql = `
   UPDATE movies
-  SET title = ?, cats_id = ?, price = ?,  rates = ?, rate_sum = ?
+  SET title = ?, cats_id = ?, price = ?,  rates = ?, rate_sum = ?, photo = ?
   WHERE id = ?
   `;
-  con.query(sql, [req.body.title, req.body.cat, req.body.price, req.body.rates, req.body.rate_sum, req.params.id], (err, result) => {
+  con.query(sql, [req.body.title, req.body.cat, req.body.price, req.body.rates, req.body.rate_sum, req.body.photo, req.params.id], (err, result) => {
     if (err) throw err;
     res.send({ result, msg: { text: 'OK, Movie updated. Now it is as new', type: 'success' } });
   });

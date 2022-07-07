@@ -1,5 +1,6 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import BackContext from "../BackContext";
+import getBase64 from '../../../Functions/getBase64';
 
 function Edit() {
 
@@ -10,6 +11,16 @@ function Edit() {
   const [price, setPrice] = useState('');
   const [rate, setRate] = useState('10')
   const [cat, setCat] = useState('0');
+  const fileInput = useRef();
+  const [photoPrint, setPhotoPrint] = useState(null);
+
+  const doPhoto = () => {
+    getBase64(fileInput.current.files[0])
+      .then(photo => setPhotoPrint(photo))
+      .catch(_ => {
+        // tylim
+      })
+  }
 
   useEffect(() => {
     if (null === modalMovie) {
@@ -19,7 +30,7 @@ function Edit() {
     setPrice(modalMovie.price);
     setRate(modalMovie.rate);
     setCat(cats.filter(c => c.title === modalMovie.cat)[0].id);
-    // setPhotoPrint(modalProduct.photo);
+    setPhotoPrint(modalMovie.photo);
   }, [modalMovie, cats]);
 
   const handleEdit = () => {
@@ -30,7 +41,7 @@ function Edit() {
       price: parseFloat(price),
       cat: parseInt(cat),
       // lu: lu,
-      // photo: photoPrint
+      photo: photoPrint
     };
     setEditMovie(data);
     setModalMovie(null);
@@ -43,7 +54,7 @@ function Edit() {
 
   return (
     <div className="modal">
-      <div className="modal-dialog modal-dialog-centered">
+      <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">Movie Changer</h5>
@@ -81,6 +92,16 @@ function Edit() {
               </select>
               {/* <small className="form-text text-muted">Select category here.</small> */}
             </div>
+            <div className="form-group">
+              <label>Photo</label>
+              <input ref={fileInput} type="file" className="form-control" onChange={doPhoto} />
+              <small className="form-text text-muted">Upload Photo.</small>
+            </div>
+            <div>
+              {
+                photoPrint ? <div className="photo-bin"><img src={photoPrint} alt="nice" /></div> : null
+              }
+            </div>
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-outline-secondary" onClick={() => setModalMovie(null)}>Close</button>
@@ -88,7 +109,7 @@ function Edit() {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 
