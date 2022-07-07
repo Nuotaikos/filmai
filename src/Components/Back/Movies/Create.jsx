@@ -1,5 +1,7 @@
+import { useRef } from 'react';
 import { useContext, useState } from 'react';
 import BackContext from '../BackContext';
+import getBase64 from '../../../Functions/getBase64';
 
 function Create() {
 
@@ -9,6 +11,7 @@ function Create() {
   const [price, setPrice] = useState('');
   const [rate, setRate] = useState('10')
   const [cat, setCat] = useState('0');
+  const fileInput = useRef();
 
   const handleCreate = () => {
     if (cat === '0') {
@@ -16,14 +19,48 @@ function Create() {
       return;
     }
 
-    const data = { title, price: parseFloat(price), rate: parseFloat(rate), cat: parseInt(cat) };
-    setCreateMovie(data); // paimam is const ir pasetinam
-    setTitle(''); //nunulinam title
-    setPrice('');
-    setRate(false);
-    setCat('0');
-  }
+    //   const data = { title, price: parseFloat(price), rate: parseFloat(rate), cat: parseInt(cat) };
+    //   setCreateMovie(data); // paimam is const ir pasetinam
+    //   setTitle(''); //nunulinam title
+    //   setPrice('');
+    //   setRate(false);
+    //   setCat('0');
+    // }
 
+    const file = fileInput.current.files[0];
+    if (file) {
+      getBase64(file)
+        .then(photo => {
+          console.log(photo);
+          const data = {
+            title,
+            price: parseFloat(price),
+            // inStock: inStock ? 1 : 0,
+            cat: parseInt(cat),
+            photo
+          };
+          setCreateMovie(data);
+          setTitle('');
+          setPrice('');
+          // setInStock(false);
+          setCat('0');
+        });
+    } else {
+      const data = {
+        title,
+        price: parseFloat(price),
+        // inStock: inStock ? 1 : 0,
+        cat: parseInt(cat),
+        photo: null
+      };
+      setCreateMovie(data);
+      setTitle('');
+      setPrice('');
+      // setInStock(false);
+      setCat('0');
+    }
+
+  }
   const rateIt = e => {
     setRate(e.target.value)
     // setRateNow({
@@ -42,12 +79,12 @@ function Create() {
         <div className="form-group">
           <label>Title</label>
           <input type="text" className="form-control" onChange={e => setTitle(e.target.value)} value={title} />
-          <small className="form-text text-muted">Enter Movie name here.</small>
+          <small className="form-text text-muted">Enter Movie name here</small>
         </div>
         <div className="form-group">
           <label>Price</label>
           <input type="text" className="form-control" onChange={e => setPrice(e.target.value)} value={price} />
-          <small className="form-text text-muted">Enter price.</small>
+          <small className="form-text text-muted">Enter price</small>
         </div>
         <div className="form-group mt-3">
           <label className="mr-2">Rate it!</label>
@@ -66,6 +103,11 @@ function Create() {
             }
           </select>
           {/* <small className="form-text text-muted">Select category here.</small> */}
+        </div>
+        <div className="form-group">
+          <label>Photo</label>
+          <input ref={fileInput} type="file" className="form-control" />
+          <small className="form-text text-muted">Upload Photo</small>
         </div>
         <button type="button" className="btn btn-outline-primary" onClick={handleCreate}>Create</button>
       </div>
