@@ -69,6 +69,8 @@ app.put("/admin/cats/:id", (req, res) => {
   });
 });
 
+// <<<<<<<<<<<<< Movies>>>>>>>>>>>>>>>>>>>
+
 // Movies create
 app.post("/admin/movies", (req, res) => {
   const sql = `
@@ -110,6 +112,18 @@ app.delete("/admin/movies/:id", (req, res) => {
   });
 });
 
+// Edit
+app.put("/admin/movies/:id", (req, res) => {
+  const sql = `
+  UPDATE movies
+  SET title = ?, cats_id = ?, price = ?,  rates = ?, rate_sum = ?
+  WHERE id = ?
+  `;
+  con.query(sql, [req.body.title, req.body.cat, req.body.price, req.body.rates, req.body.rate_sum, req.params.id], (err, result) => {
+    if (err) throw err;
+    res.send({ result, msg: { text: 'OK, Movie updated. Now it is as new', type: 'success' } });
+  });
+});
 app.listen(port, () => {
   console.log(`Filmus rodo portas Nr ${port}`);
 });

@@ -26,8 +26,8 @@ function Back({ show }) {
   const [movies, setMovies] = useState(null);
   const [createMovie, setCreateMovie] = useState(null);
   const [deleteMovie, setDeleteMovie] = useState(null);
-  // const [editProduct, setEditProduct] = useState(null);
-  // const [modalProduct, setModalProduct] = useState(null);
+  const [editMovie, setEditMovie] = useState(null);
+  const [modalMovie, setModalMovie] = useState(null);
 
   // Read
   useEffect(() => {
@@ -103,6 +103,17 @@ function Back({ show }) {
         showMessage({ text: error.message, type: 'danger' });
       })
   }, [editCat]);
+  useEffect(() => {
+    if (null === editMovie) return;
+    axios.put('http://localhost:3003/admin/movies/' + editMovie.id, editMovie)
+      .then(res => {
+        showMessage(res.data.msg);
+        setLastUpdate(Date.now());
+      })
+      .catch(error => {
+        showMessage({ text: error.message, type: 'danger' });
+      })
+  }, [editMovie]);
 
   const showMessage = (m) => {
     const id = uuidv4();
@@ -126,7 +137,10 @@ function Back({ show }) {
       setCreateMovie,
       movies,
       showMessage,
-      setDeleteMovie
+      setDeleteMovie,
+      setEditMovie,
+      setModalMovie,
+      modalMovie
     }}>
       {
         show === 'admin' ?

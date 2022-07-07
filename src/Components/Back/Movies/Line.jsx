@@ -3,14 +3,14 @@ import BackContext from '../BackContext';
 
 function Line({ line }) {
 
-  const { setDeleteMovie } = useContext(BackContext);
+  const { setDeleteMovie, setModalMovie } = useContext(BackContext);
 
   const handleDelete = () => {
     setDeleteMovie(line);
   }
 
   const handleEdit = () => {
-    // setModalCat(line);
+    setModalMovie(line);
   }
 
   return (

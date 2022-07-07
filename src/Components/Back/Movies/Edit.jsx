@@ -3,25 +3,41 @@ import BackContext from "../BackContext";
 
 function Edit() {
 
-  const { modalCat, setEditCat, setModalCat } = useContext(BackContext);
+  const { modalMovie, setEditMovie, setModalMovie, cats } = useContext(BackContext);
 
 
   const [title, setTitle] = useState('');
+  const [price, setPrice] = useState('');
+  const [rate, setRate] = useState('10')
+  const [cat, setCat] = useState('0');
 
   useEffect(() => {
-    if (null === modalCat) {
+    if (null === modalMovie) {
       return;
     }
-    setTitle(modalCat.title);
-  }, [modalCat]);
+    setTitle(modalMovie.title);
+    setPrice(modalMovie.price);
+    setRate(modalMovie.rate);
+    setCat(cats.filter(c => c.title === modalMovie.cat)[0].id);
+    // setPhotoPrint(modalProduct.photo);
+  }, [modalMovie, cats]);
 
   const handleEdit = () => {
-    const data = { title, id: modalCat.id };
-    setEditCat(data);
-    setModalCat(null);
+    const data = {
+      title,
+      id: modalMovie.id,
+      // in_stock: inStock ? 1 : 0,
+      price: parseFloat(price),
+      cat: parseInt(cat),
+      // lu: lu,
+      // photo: photoPrint
+    };
+    setEditMovie(data);
+    setModalMovie(null);
   }
 
-  if (null === modalCat) {
+
+  if (null === modalMovie) {
     return null;
   }
 
@@ -30,8 +46,8 @@ function Edit() {
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">Cat Changer</h5>
-            <button type="button" className="close" onClick={() => setModalCat(null)}>
+            <h5 className="modal-title">Movie Changer</h5>
+            <button type="button" className="close" onClick={() => setModalMovie(null)}>
               <span>&times;</span>
             </button>
           </div>
@@ -39,16 +55,40 @@ function Edit() {
             <div className="form-group">
               <label>Title</label>
               <input type="text" className="form-control" onChange={e => setTitle(e.target.value)} value={title} />
-              <small className="form-text text-muted">Enter cat title here.</small>
+              <small className="form-text text-muted">Enter movie title here.</small>
+            </div>
+            <div className="form-group">
+              <label>Price</label>
+              <input type="text" className="form-control" onChange={e => setPrice(e.target.value)} value={price} />
+              <small className="form-text text-muted">Enter price.</small>
+            </div>
+            <div className="form-group mt-3">
+              <label className="mr-2">Rate it!</label>
+              <select value={rate}>
+                {/* onChange={rateIt} */}
+                {
+                  [...Array(10)].map((_, i) => <option key={i} value={10 - i}>{10 - i}</option>)
+                }
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Categories</label>
+              <select className="form-control" onChange={e => setCat(e.target.value)} value={cat}>
+                <option value="0">Please, select your Category</option>
+                {
+                  cats ? cats.map(c => <option key={c.id} value={c.id}>{c.title}</option>) : null
+                }
+              </select>
+              {/* <small className="form-text text-muted">Select category here.</small> */}
             </div>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-outline-secondary" onClick={() => setModalCat(null)}>Close</button>
+            <button type="button" className="btn btn-outline-secondary" onClick={() => setModalMovie(null)}>Close</button>
             <button type="button" className="btn btn-outline-primary" onClick={handleEdit}>Save changes</button>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 
