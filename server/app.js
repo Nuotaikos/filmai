@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3003;
 const cors = require("cors");
+app.use(express.json({ limit: '10mb' }));
 app.use(cors());
 const mysql = require("mysql");
 app.use(
@@ -75,10 +76,10 @@ app.put("/admin/cats/:id", (req, res) => {
 app.post("/admin/movies", (req, res) => {
   const sql = `
   INSERT INTO movies
-  (title, price, rates, cats_id )
-  VALUES (?, ?, ?, ?)
+  (title, price, rates, cats_id, photo )
+  VALUES (?, ?, ?, ?, ?)
   `;
-  con.query(sql, [req.body.title, req.body.price, req.body.rates, req.body.cat], (err, result) => {
+  con.query(sql, [req.body.title, req.body.price, req.body.rates, req.body.cat, req.body.photo], (err, result) => {
     if (err) throw err;
     res.send({ result, msg: { text: 'OK, new Movie was created', type: 'success' } });
   });

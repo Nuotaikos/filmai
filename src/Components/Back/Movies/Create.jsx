@@ -40,6 +40,8 @@ function Create() {
     setPrice('');
     // setInStock(false);
     setCat('0');
+    setPhotoPrint(null);
+    fileInput.current.value = null;
   }
 
 
