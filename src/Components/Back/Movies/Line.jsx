@@ -27,6 +27,9 @@ function Line({ line }) {
           </b>
           <i>{line.price.toFixed(2)} Eur</i>
           {/* <span>{['Documentary', 'Family', 'Animation', 'Drama', 'Horror']}</span> */}
+          {
+            line.photo ? <div className="photo-bin"><img src={line.photo} alt={line.title} /></div> : null
+          }
         </div>
         <div className="buttons">
           <button type="button" className="btn btn-outline-success ml-2" onClick={handleEdit}>Edit</button>

@@ -28,6 +28,7 @@ function Back({ show }) {
   const [deleteMovie, setDeleteMovie] = useState(null);
   const [editMovie, setEditMovie] = useState(null);
   const [modalMovie, setModalMovie] = useState(null);
+  const [deletePhoto, setDeletePhoto] = useState(null);
 
   // Read
   useEffect(() => {
@@ -90,7 +91,18 @@ function Back({ show }) {
         showMessage({ text: error.message, type: 'danger' });
       })
   }, [deleteMovie]);
-
+  // Delete photo
+  useEffect(() => {
+    if (null === deletePhoto) return;
+    axios.delete('http://localhost:3003/admin/photos/' + deletePhoto.id)
+      .then(res => {
+        showMessage(res.data.msg);
+        setLastUpdate(Date.now());
+      })
+      .catch(error => {
+        showMessage({ text: error.message, type: 'danger' });
+      })
+  }, [deletePhoto]);
   // Edit
   useEffect(() => {
     if (null === editCat) return;
@@ -140,7 +152,8 @@ function Back({ show }) {
       setDeleteMovie,
       setEditMovie,
       setModalMovie,
-      modalMovie
+      modalMovie,
+      setDeletePhoto
     }}>
       {
         show === 'admin' ?

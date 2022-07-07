@@ -125,6 +125,19 @@ app.put("/admin/movies/:id", (req, res) => {
     res.send({ result, msg: { text: 'OK, Movie updated. Now it is as new', type: 'success' } });
   });
 });
+//delete photos
+app.delete("/admin/photos/:id", (req, res) => {
+  const sql = `
+  UPDATE movies
+  SET photo = null
+  WHERE id = ?
+  `;
+  con.query(sql, [req.params.id], (err, result) => {
+    if (err) throw err;
+    res.send({ result, msg: { text: 'OK, photo gone. Have a nice day.', type: 'success' } });
+  });
+});
+
 app.listen(port, () => {
   console.log(`Filmus rodo portas Nr ${port}`);
 });
