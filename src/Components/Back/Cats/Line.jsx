@@ -21,7 +21,7 @@ function Line({ line }) {
           {/* <span>{['Documentary', 'Family', 'Animation', 'Drama', 'Horror']}</span> */}
         </div>
         <div className="buttons">
-          <button type="button" className="btn btn-success ml-2" onClick={handleEdit}>Edit</button>
+          <button type="button" className="btn btn-light ml-2" onClick={handleEdit}>Edit</button>
           <button type="button" className="btn btn-danger ml-2" onClick={handleDelete}>Delete</button>
         </div>
       </div>
