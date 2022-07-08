@@ -25,10 +25,9 @@ function Line({ line }) {
           </div>
           <b>{line.title}</b>
           <div className="cat">{line.cat}</div>
-          <i>{line.rate_sum}</i>
           <b className="ml-4">
             {
-              line.rate ? 'rate: ' + (line.rate / line.rates).toFixed(2) : '"No rates yet"'
+              line.rate_sum ? 'rate: ' + (line.rate_sum / line.rates).toFixed(2) : 'No rates yet'
             }
           </b>
           <i>{line.price.toFixed(2)} Eur</i>

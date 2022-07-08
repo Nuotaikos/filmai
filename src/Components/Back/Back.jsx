@@ -29,6 +29,7 @@ function Back({ show }) {
   const [editMovie, setEditMovie] = useState(null);
   const [modalMovie, setModalMovie] = useState(null);
   const [deletePhoto, setDeletePhoto] = useState(null);
+  const [rateNow, setRateNow] = useState(null);
 
   // Read
   useEffect(() => {
@@ -127,6 +128,16 @@ function Back({ show }) {
       })
   }, [editMovie]);
 
+  // Rate
+  // Create
+  useEffect(() => {
+    if (null === rateNow) return;
+    axios.put('http://localhost:3003/admin/movies/' + rateNow.id, rateNow)
+      .then(_ => {
+        setLastUpdate(Date.now());
+      })
+  }, [rateNow]);
+
   const showMessage = (m) => {
     const id = uuidv4();
     m.id = id;
@@ -153,7 +164,8 @@ function Back({ show }) {
       setEditMovie,
       setModalMovie,
       modalMovie,
-      setDeletePhoto
+      setDeletePhoto,
+      setRateNow
     }}>
       {
         show === 'admin' ?

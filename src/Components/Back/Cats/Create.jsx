@@ -20,7 +20,7 @@ function Create() {
       </div>
       <div className="card-body">
         <div className="form-group">
-          <label>Movie category</label>
+          <label className="form-group mb-2">Movie category</label>
           {/* <input type="text" className="form-control" onChange={e => setTitle(e.target.value)} value={title} /> */}
           <select className="form-control" onChange={e => setTitle(e.target.value)} value={title}>
             <option value="0" >Please, select your Category</option>
@@ -32,7 +32,7 @@ function Create() {
           </select>
           {/* <small className="form-text text-muted">Select category here.</small> */}
         </div>
-        <button type="button" className="btn btn-primary" onClick={handleCreate}>Create</button>
+        <button type="button" className="btn btn-primary mt-3" onClick={handleCreate}>Create</button>
       </div>
     </div>
   );

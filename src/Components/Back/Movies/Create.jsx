@@ -5,7 +5,7 @@ import getBase64 from '../../../Functions/getBase64';
 
 function Create() {
 
-  const { cats, setCreateMovie, showMessage } = useContext(BackContext);
+  const { cats, setCreateMovie, showMessage, setRateNow } = useContext(BackContext);
 
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
@@ -47,10 +47,10 @@ function Create() {
 
   const rateIt = e => {
     setRate(e.target.value)
-    // setRateNow({
-    //   rate: parseInt(e.target.value),
-    //   id: title.id
-    // });
+    setRateNow({
+      rate: parseInt(e.target.value),
+      id: title.id
+    });
   }
 
 
@@ -73,6 +73,7 @@ function Create() {
         <div className="btn-group">
           <label className="btn btn-dark disabled" >Rate it!</label>
           <select lassName="form-select" value={rate} onChange={rateIt}>
+            <option value="0" >Please, select rate</option>
             {
               [...Array(10)].map((_, i) => <option key={i} value={10 - i}>{10 - i}</option>)
             }
