@@ -32,7 +32,7 @@ function Create() {
           </select>
           {/* <small className="form-text text-muted">Select category here.</small> */}
         </div>
-        <button type="button" className="btn btn-outline-primary" onClick={handleCreate}>Create</button>
+        <button type="button" className="btn btn-primary" onClick={handleCreate}>Create</button>
       </div>
     </div>
   );

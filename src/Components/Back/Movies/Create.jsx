@@ -70,9 +70,9 @@ function Create() {
           <input type="text" className="form-control" onChange={e => setPrice(e.target.value)} value={price} />
           <small className="form-text text-muted">Enter price</small>
         </div>
-        <div className="form-group mt-3">
-          <label className="mr-2">Rate it!</label>
-          <select value={rate} onChange={rateIt}>
+        <div className="btn-group">
+          <label className="btn btn-dark disabled" >Rate it!</label>
+          <select lassName="form-select" value={rate} onChange={rateIt}>
             {
               [...Array(10)].map((_, i) => <option key={i} value={10 - i}>{10 - i}</option>)
             }
@@ -96,7 +96,7 @@ function Create() {
         {
           photoPrint ? <div className="photo-bin"><img src={photoPrint} alt="nice" /></div> : null
         }
-        <button type="button" className="btn btn-outline-primary" onClick={handleCreate}>Create</button>
+        <button type="button" className="btn btn-primary" onClick={handleCreate}>Create</button>
       </div>
     </div>
   );

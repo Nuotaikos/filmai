@@ -43,8 +43,8 @@ function Edit() {
             </div>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-outline-secondary" onClick={() => setModalCat(null)}>Close</button>
-            <button type="button" className="btn btn-outline-primary" onClick={handleEdit}>Save changes</button>
+            <button type="button" className="btn btn-secondary" onClick={() => setModalCat(null)}>Close</button>
+            <button type="button" className="btn btn-primary" onClick={handleEdit}>Save changes</button>
           </div>
         </div>
       </div>
