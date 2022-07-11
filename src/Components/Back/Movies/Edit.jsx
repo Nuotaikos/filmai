@@ -28,12 +28,13 @@ function Edit() {
   }
 
   useEffect(() => {
+    console.log(modalMovie)
     if (null === modalMovie) {
       return;
     }
     setTitle(modalMovie.title);
     setPrice(modalMovie.price);
-    setRate(modalMovie.rate);
+    setRate(modalMovie.rates);
     setCat(cats.filter(c => c.title === modalMovie.cat)[0].id);
     setPhotoPrint(modalMovie.photo);
   }, [modalMovie, cats]);
@@ -46,8 +47,10 @@ function Edit() {
       price: parseFloat(price),
       cat: parseInt(cat),
       // lu: lu,
+      rates: parseInt(rate),
       photo: photoPrint
     };
+    console.log('data', data)
     setEditMovie(data);
     setModalMovie(null);
   }
@@ -80,8 +83,8 @@ function Edit() {
             </div>
             <div className="form-group mt-3">
               <label className="mr-2">Rate it!</label>
-              <select value={rate}>
-                {/* onChange={rateIt} */}
+              <select value={rate} onChange={e => setRate(e.target.value)}>
+
                 {
                   [...Array(10)].map((_, i) => <option key={i} value={10 - i}>{10 - i}</option>)
                 }

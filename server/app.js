@@ -140,8 +140,8 @@ app.put("/admin/cats/:id", (req, res) => {
 app.post("/admin/movies", (req, res) => {
   const sql = `
   INSERT INTO movies
-  (title, price, rates, cats_id, photo )
-  VALUES (?, ?, ?, ?, ?)
+  (title, price, rates, rate_sum, cats_id, photo )
+  VALUES (?, ?, rates + 1, ?, ?, ?)
   `;
   con.query(sql, [req.body.title, req.body.price, req.body.rates, req.body.cat, req.body.photo], (err, result) => {
     if (err) throw err;
@@ -193,26 +193,26 @@ app.delete("/admin/movies/:id", (req, res) => {
 app.put("/admin/movies/:id", (req, res) => {
   const sql = `
   UPDATE movies
-  SET title = ?, cats_id = ?, price = ?, photo = ?
+  SET title = ?, cats_id = ?, price = ?, photo = ?, rates = rates + 1, rate_sum = rate_sum + ?
   WHERE id = ?
   `;
-  con.query(sql, [req.body.title, req.body.cat, req.body.price, req.body.photo, req.params.id], (err, result) => {
+  con.query(sql, [req.body.title, req.body.cat, req.body.price, req.body.photo, req.body.rates, req.params.id], (err, result) => {
     if (err) throw err;
     res.send({ result, msg: { text: 'OK, Movie updated. Now it is as new', type: 'success' } });
   });
 });
 
-app.put("/admin/movies/:movieId", (req, res) => {
-  const sql = `
-  UPDATE movies
-  SET rates = rates + 1, rate_sum = rate_sum + ?
-  WHERE id = ?
-`;
-  con.query(sql, [req.body.rate, req.params.movieId], (err, result) => {
-    if (err) throw err;
-    res.send({ result, msg: { text: 'Tu prabalsavai', type: 'danger' } });
-  });
-});
+// app.put("/admin/movies/:movieId", (req, res) => {
+//   const sql = `
+//   UPDATE movies
+//   SET rates = rates + 1, rate_sum = rate_sum + ?
+//   WHERE id = ?
+// `;
+//   con.query(sql, [req.body.rates, req.params.movieId], (err, result) => {
+//     if (err) throw err;
+//     res.send({ result, msg: { text: 'Tu prabalsavai', type: 'danger' } });
+//   });
+// });
 //delete photos
 app.delete("/admin/photos/:id", (req, res) => {
   const sql = `

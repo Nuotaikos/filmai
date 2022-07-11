@@ -118,6 +118,7 @@ function Back({ show }) {
       })
   }, [editCat]);
   useEffect(() => {
+    console.log('editMovie', editMovie)
     if (null === editMovie) return;
     axios.put('http://localhost:3003/admin/movies/' + editMovie.id, editMovie, authConfig())
       .then(res => {

@@ -33,7 +33,8 @@ function Create() {
       price: parseFloat(price),
       // inStock: inStock ? 1 : 0,
       cat: parseInt(cat),
-      photo: photoPrint
+      photo: photoPrint, 
+      rates: parseInt(rate),
     };
     setCreateMovie(data);
     setTitle('');
