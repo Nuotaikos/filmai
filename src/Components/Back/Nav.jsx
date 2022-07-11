@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import Messages from "./Messages";
 
 function Nav() {
@@ -25,6 +25,7 @@ function Nav() {
                   color: 'crimson'
                 } : null
             }>Movies</NavLink>
+            <Link className="nav-link" to='/logout'>Logout</Link>
           </div>
         </div>
       </nav>
