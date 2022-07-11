@@ -5,6 +5,7 @@ import CatsCrud from './Cats/Crud';
 import MoviesCrud from './Movies/Crud';
 import Nav from './Nav';
 import { v4 as uuidv4 } from 'uuid';
+import { authConfig } from '../../Functions/auth';
 
 function Back({ show }) {
 
@@ -33,19 +34,19 @@ function Back({ show }) {
 
   // Read
   useEffect(() => {
-    axios.get('http://localhost:3003/admin/cats')
+    axios.get('http://localhost:3003/admin/cats', authConfig())
       .then(res => setCats(res.data));
   }, [lastUpdate]);
   // Read movies
   useEffect(() => {
-    axios.get('http://localhost:3003/admin/movies')
+    axios.get('http://localhost:3003/admin/movies', authConfig())
       .then(res => setMovies(res.data));
   }, [lastUpdate]);
 
   // Create Cat
   useEffect(() => {
     if (null === createCat) return;
-    axios.post('http://localhost:3003/admin/cats', createCat) //metodas post. Supostinam, gaunam zinute, kurios kol kas nera 
+    axios.post('http://localhost:3003/admin/cats', createCat, authConfig()) //metodas post. Supostinam, gaunam zinute, kurios kol kas nera 
       .then(res => {
         showMessage(res.data.msg);
         setLastUpdate(Date.now());
@@ -57,7 +58,7 @@ function Back({ show }) {
   // Create Movie
   useEffect(() => {
     if (null === createMovie) return;
-    axios.post('http://localhost:3003/admin/movies', createMovie)
+    axios.post('http://localhost:3003/admin/movies', createMovie, authConfig())
       .then(res => {
         showMessage(res.data.msg);
         setLastUpdate(Date.now());
@@ -70,7 +71,7 @@ function Back({ show }) {
   // Delete cat
   useEffect(() => {
     if (null === deleteCat) return;
-    axios.delete('http://localhost:3003/admin/cats/' + deleteCat.id)
+    axios.delete('http://localhost:3003/admin/cats/' + deleteCat.id, authConfig())
       .then(res => {
         showMessage(res.data.msg);
         setLastUpdate(Date.now());
@@ -83,7 +84,7 @@ function Back({ show }) {
   // Delete movie
   useEffect(() => {
     if (null === deleteMovie) return;
-    axios.delete('http://localhost:3003/admin/movies/' + deleteMovie.id)
+    axios.delete('http://localhost:3003/admin/movies/' + deleteMovie.id, authConfig())
       .then(res => {
         showMessage(res.data.msg);
         setLastUpdate(Date.now());
@@ -95,7 +96,7 @@ function Back({ show }) {
   // Delete photo
   useEffect(() => {
     if (null === deletePhoto) return;
-    axios.delete('http://localhost:3003/admin/photos/' + deletePhoto.id)
+    axios.delete('http://localhost:3003/admin/photos/' + deletePhoto.id, authConfig())
       .then(res => {
         showMessage(res.data.msg);
         setLastUpdate(Date.now());
@@ -107,7 +108,7 @@ function Back({ show }) {
   // Edit
   useEffect(() => {
     if (null === editCat) return;
-    axios.put('http://localhost:3003/admin/cats/' + editCat.id, editCat)
+    axios.put('http://localhost:3003/admin/cats/' + editCat.id, editCat, authConfig())
       .then(res => {
         showMessage(res.data.msg);
         setLastUpdate(Date.now());
@@ -118,7 +119,7 @@ function Back({ show }) {
   }, [editCat]);
   useEffect(() => {
     if (null === editMovie) return;
-    axios.put('http://localhost:3003/admin/movies/' + editMovie.id, editMovie)
+    axios.put('http://localhost:3003/admin/movies/' + editMovie.id, editMovie, authConfig())
       .then(res => {
         showMessage(res.data.msg);
         setLastUpdate(Date.now());
@@ -132,7 +133,7 @@ function Back({ show }) {
   // Create
   useEffect(() => {
     if (null === rateNow) return;
-    axios.put('http://localhost:3003/admin/movies/' + rateNow.id, rateNow)
+    axios.put('http://localhost:3003/admin/movies/' + rateNow.id, rateNow, authConfig())
       .then(_ => {
         setLastUpdate(Date.now());
       })
