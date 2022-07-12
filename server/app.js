@@ -21,7 +21,7 @@ const con = mysql.createConnection({
   database: "filmai",
 });
 
-const doAuth = function (req, res, next) {
+const doAuth = function (req, res, next) { //admin rout
   if (0 === req.url.indexOf('/admin')) {
     const sql = `
       SELECT
@@ -41,21 +41,52 @@ const doAuth = function (req, res, next) {
         }
       }
     );
-  } else {
+  } else if (0 === req.url.indexOf('/login-check') || 0 === req.url.indexOf('/login')) {
     next();
+  } else { // fron
+    const sql = `
+    SELECT
+    name, role
+    FROM users
+    WHERE session = ? 
+`;
+    con.query(
+      sql, [req.headers['authorization'] || ''],
+      (err, results) => {
+        if (err) throw err;
+        if (!results.length) {
+          res.status(401).send({});
+          req.connection.destroy();
+        } else {
+          next();
+        }
+      }
+    );
   }
 }
-app.use(doAuth)
 
 // AUTH
 app.get("/login-check", (req, res) => {
-  const sql = `
-  SELECT
-  name
-  FROM users
-  WHERE session = ? AND role = ?
-  `;
-  con.query(sql, [req.headers['authorization'] || '', req.query.role], (err, result) => {
+  let sql;
+  let requests;
+  if (req.query.role === 'admin') {
+    sql = `
+      SELECT
+      name
+      FROM users
+      WHERE session = ? AND role = ?
+      `;
+    requests = [req.headers['authorization'] || '', req.query.role];
+  } else {
+    sql = `
+      SELECT
+      name
+      FROM users
+      WHERE session = ?
+      `;
+    requests = [req.headers['authorization'] || ''];
+  }
+  con.query(sql, requests, (err, result) => {
     if (err) throw err;
     if (!result.length) {
       res.send({ msg: 'error' });

@@ -21,23 +21,23 @@ function App() {
     <BrowserRouter>
 
       <Routes>
-        <Route path="/" element={<Front />} />
+        <Route path="/" element={<RequireAuth role="user"><Front /></RequireAuth>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/logout" element={<LogoutPage />} />
-        <Route path="/admin" element={<RequireAuth><Back show="admin" /></RequireAuth>} />
-        <Route path="/admin/cats" element={<RequireAuth><Back show="cats" /></RequireAuth>} />
-        <Route path="/admin/movies" element={<RequireAuth><Back show="movies" /></RequireAuth>} />
+        <Route path="/admin" element={<RequireAuth role="admin"><Back show="admin" /></RequireAuth>} />
+        <Route path="/admin/cats" element={<RequireAuth role="admin"><Back show="cats" /></RequireAuth>} />
+        <Route path="/admin/movies" element={<RequireAuth role="admin"><Back show="movies" /></RequireAuth>} />
       </Routes>
 
     </BrowserRouter>
   )
 }
 
-function RequireAuth({ children }) {
+function RequireAuth({ children, role }) {
   const [view, setView] = useState(<h2>Please wait...</h2>);
 
   useEffect(() => {
-    axios.get('http://localhost:3003/login-check?role=admin', authConfig())
+    axios.get('http://localhost:3003/login-check?role=' + role, authConfig())
       .then(res => {
         if ('ok' === res.data.msg) {
           setView(children);
@@ -63,7 +63,7 @@ function LoginPage() {
         console.log(res.data);
         if ('ok' === res.data.msg) {
           login(res.data.key);
-          navigate('/admin/', { replace: true });
+          navigate('/', { replace: true });
         }
       })
   }
