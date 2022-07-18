@@ -259,13 +259,42 @@ app.delete("/admin/photos/:id", (req, res) => {
 
 //Front
 //READ MOVIES
+// app.get("/movies", (req, res) => {
+//   const sql = `
+// SELECT m.id, price, m.title, m.rates, m.rate_sum, c.title AS cat, photo
+// FROM movies AS m
+// LEFT JOIN cats AS c
+// ON c.id = m.cats_id
+// ORDER BY title 
+// `;
+//   con.query(sql, (err, result) => {
+//     if (err) throw err;
+//     res.send(result);
+//   });
+// });
+
+// FRONT
+
 app.get("/movies", (req, res) => {
   const sql = `
 SELECT m.id, price, m.title, m.rates, m.rate_sum, c.title AS cat, photo
-FROM movies AS m
+FROM movies AS p
 LEFT JOIN cats AS c
-ON c.id = m.cats_id
-ORDER BY title 
+ON c.id = p.cats_id
+ORDER BY title
+`;
+  con.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
+
+app.get("/cats", (req, res) => {
+  const sql = `
+SELECT *
+FROM cats
+ORDER BY title
 `;
   con.query(sql, (err, result) => {
     if (err) throw err;

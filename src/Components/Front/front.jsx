@@ -10,6 +10,7 @@ import SortFilter from "./SortFilter";
 function Front() {
 
   const [movies, setMovies] = useState(null);
+  const [cats, setCats] = useState(null);
 
   // Read movies
   useEffect(() => {
@@ -17,10 +18,16 @@ function Front() {
       .then(res => setMovies(res.data.map((p, i) => ({ ...p, row: i }))));
   }, []);
 
+  useEffect(() => {
+    axios.get('http://localhost:3003/cats', authConfig())
+      .then(res => setCats(res.data));
+  }, []);
+
   return (
     <FrontContext.Provider value={{
       movies,
-      setMovies
+      setMovies,
+      cats
     }}>
       <Nav />
       <div className="container">
