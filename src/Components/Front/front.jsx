@@ -4,6 +4,7 @@ import { authConfig } from "../../Functions/auth";
 import FrontContext from "./FrontContext";
 import List from "./List";
 import Nav from "./Nav";
+import SortFilter from "./SortFilter";
 
 
 function Front() {
@@ -13,17 +14,19 @@ function Front() {
   // Read movies
   useEffect(() => {
     axios.get('http://localhost:3003/movies', authConfig())
-      .then(res => setMovies(res.data));
+      .then(res => setMovies(res.data.map((p, i) => ({ ...p, row: i }))));
   }, []);
 
   return (
     <FrontContext.Provider value={{
-      movies
+      movies,
+      setMovies
     }}>
       <Nav />
       <div className="container">
         <div className="row">
           <div className="col-12">
+            <SortFilter />
           </div>
           <div className="col-12">
             <List />
