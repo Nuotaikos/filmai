@@ -42,19 +42,19 @@ const doAuth = function (req, res, next) { //admin rout
       }
     );
   } else if (0 === req.url.indexOf('/login-check') || 0 === req.url.indexOf('/login')) {
-    next();
-  } else { // fron
+    next(); //viesa dalis
+  } else { // frontui
     const sql = `
     SELECT
     name, role
     FROM users
-    WHERE session = ? 
+    WHERE session = ?
 `;
     con.query(
       sql, [req.headers['authorization'] || ''],
       (err, results) => {
         if (err) throw err;
-        if (!results.length) {
+        if (!results.length || results[0].role !== 'user') {
           res.status(401).send({});
           req.connection.destroy();
         } else {
@@ -254,6 +254,22 @@ app.delete("/admin/photos/:id", (req, res) => {
   con.query(sql, [req.params.id], (err, result) => {
     if (err) throw err;
     res.send({ result, msg: { text: 'OK, photo gone. Have a nice day.', type: 'success' } });
+  });
+});
+
+//Front
+//READ MOVIES
+app.get("/movies", (req, res) => {
+  const sql = `
+SELECT m.id, price, m.title, m.rates, m.rate_sum, c.title AS cat, photo
+FROM movies AS m
+LEFT JOIN cats AS c
+ON c.id = m.cats_id
+ORDER BY title 
+`;
+  con.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result);
   });
 });
 

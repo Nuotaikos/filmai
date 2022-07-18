@@ -43,6 +43,7 @@ function Back({ show }) {
       .then(res => setMovies(res.data));
   }, [lastUpdate]);
 
+
   // Create Cat
   useEffect(() => {
     if (null === createCat) return;
