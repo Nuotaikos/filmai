@@ -23,10 +23,11 @@ body {
                 margin: 0 10px;
             }
             .cat {
-                font-size: 75%;
+                font-size: 105%;
                 color: skyblue;
                 text-decoration: underline;
                 margin: 0 0 0 40px;
+                cursor: pointer;
             }
         }
         .nest-content {
@@ -48,10 +49,10 @@ body {
             margin-left: 47px;
         }
         i {
-            margin-left: 7px;
+            margin-left: 47px;
         }
         u {
-            margin-left: 7px;
+            margin-left: 47px;
             color: skyblue;
         }
     }
