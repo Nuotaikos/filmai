@@ -4,9 +4,7 @@ import FrontContext from './FrontContext';
 function SortFilter() {
 
   const [sortBy, setSortBy] = useState('default');
-  const { movies, setMovies, cats } = useContext(FrontContext);
-
-  const [cat, setCat] = useState(0);
+  const { movies, setMovies, cats, doFilter, cat } = useContext(FrontContext);
 
 
   const doSort = e => {
@@ -62,7 +60,7 @@ function SortFilter() {
             <div className="col-4">
               <div className="form-group">
                 <label>Filter by Categories</label>
-                <select className="form-control" onChange={e => setCat(e.target.value)} value={cat}>
+                <select className="form-control" onChange={e => doFilter(e.target.value)} value={cat}>
                   <option value="0">All Categories</option>
                   {
                     cats ? cats.map(c => <option key={c.id} value={c.id}>{c.title}</option>) : null

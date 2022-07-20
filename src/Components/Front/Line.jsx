@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import FrontContext from "./FrontContext";
+
 function Line({ line }) {
+
+  const { doFilter } = useContext(FrontContext);
 
   return (
 
@@ -11,7 +16,7 @@ function Line({ line }) {
             }
           </div>
           <b>{line.title}</b>
-          <div className="cat">{line.cat}</div>
+          <div className="cat" onClick={() => doFilter(line.cid)}>{line.cat}</div>
           <b className="ml-4">
             {
               line.rate_sum ? 'rate: ' + (line.rate_sum / line.rates).toFixed(2) : 'No rates yet'

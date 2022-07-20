@@ -11,12 +11,27 @@ function Front() {
 
   const [movies, setMovies] = useState(null);
   const [cats, setCats] = useState(null);
+  const [filter, setFilter] = useState(0);
+
+  const [cat, setCat] = useState(0);
+
+  const doFilter = cid => {
+    setCat(cid);
+    setFilter(parseInt(cid));
+  }
 
   // Read movies
   useEffect(() => {
-    axios.get('http://localhost:3003/movies', authConfig())
+    let query;
+    if (filter === 0) {
+      query = '';
+    } else {
+      query = '?cat-id=' + filter
+    }
+
+    axios.get('http://localhost:3003/movies' + query, authConfig())
       .then(res => setMovies(res.data.map((p, i) => ({ ...p, row: i }))));
-  }, []);
+  }, [filter]);
 
   useEffect(() => {
     axios.get('http://localhost:3003/cats', authConfig())
@@ -27,7 +42,11 @@ function Front() {
     <FrontContext.Provider value={{
       movies,
       setMovies,
-      cats
+      cats,
+      setFilter,
+      cat,
+      setCat,
+      doFilter
     }}>
       <Nav />
       <div className="container">

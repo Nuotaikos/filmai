@@ -196,6 +196,23 @@ ORDER BY title
     res.send(result);
   });
 });
+
+// Front
+// READ MOVIES
+// app.get("/movies", (req, res) => {
+//   const sql = `
+// SELECT m.id, price, m.title, m.rates, m.rate_sum, c.title AS cat, photo
+// FROM movies AS m
+// LEFT JOIN cats AS c
+// ON c.id = m.cats_id
+// ORDER BY title 
+// `;
+//   con.query(sql, (err, result) => {
+//     if (err) throw err;
+//     res.send(result);
+//   });
+// });
+
 //DELETE MOVIES
 app.delete("/admin/movies/:id", (req, res) => {
   const sql = `
@@ -257,33 +274,35 @@ app.delete("/admin/photos/:id", (req, res) => {
   });
 });
 
-//Front
-//READ MOVIES
-// app.get("/movies", (req, res) => {
-//   const sql = `
-// SELECT m.id, price, m.title, m.rates, m.rate_sum, c.title AS cat, photo
-// FROM movies AS m
-// LEFT JOIN cats AS c
-// ON c.id = m.cats_id
-// ORDER BY title 
-// `;
-//   con.query(sql, (err, result) => {
-//     if (err) throw err;
-//     res.send(result);
-//   });
-// });
 
 // FRONT
 
 app.get("/movies", (req, res) => {
-  const sql = `
-SELECT m.id, price, m.title, m.rates, m.rate_sum, c.title AS cat, photo
-FROM movies AS p
-LEFT JOIN cats AS c
-ON c.id = p.cats_id
-ORDER BY title
-`;
-  con.query(sql, (err, result) => {
+  let sql;
+  let requests;
+  console.log(req.query['cat-id']);
+  if (!req.query['cat-id']) {
+    sql = `
+      SELECT m.id, c.id AS cid, price, m.title, rates, rate_sum, c.title AS cat, photo
+      FROM movies AS m
+      LEFT JOIN cats AS c
+      ON c.id = m.cats_id
+      ORDER BY title
+      `;
+    requests = [];
+  } else {
+    sql = `
+      SELECT m.id, c.id AS cid, price, m.title, rates, rate_sum, c.title AS cat, photo
+      FROM movies AS m
+      LEFT JOIN cats AS c
+      ON c.id = m.cats_id
+      WHERE m.cats_id = ?
+      ORDER BY title
+      `;
+    requests = [req.query['cat-id']];
+  }
+
+  con.query(sql, requests, (err, result) => {
     if (err) throw err;
     res.send(result);
   });
