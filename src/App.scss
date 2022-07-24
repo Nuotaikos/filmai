@@ -148,8 +148,8 @@ button.with-loader:disabled {
 .photo-bin {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    margin: 20px 0;
+    justify-content: flex-start;
+    // margin: 20px 0;
     img {
         
         width:  100px;
@@ -157,4 +157,11 @@ button.with-loader:disabled {
         object-fit: cover;
         
     }
+}
+.cat {
+    font-size: 105%;
+    color: skyblue;
+    text-decoration: underline;
+    margin: 0 0 0 40px;
+    cursor: pointer;
 }

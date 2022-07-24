@@ -5,7 +5,7 @@ function Nav() {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarColor02">
-            WElcom
+            MOVIES RENT
           </div>
         </div>
       </nav>
