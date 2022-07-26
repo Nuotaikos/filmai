@@ -1,11 +1,18 @@
 import { useContext, useState } from 'react';
 import FrontContext from './FrontContext';
 
+
 function SortFilter() {
 
   const [sortBy, setSortBy] = useState('default');
-  const { movies, setMovies, cats, doFilter, cat } = useContext(FrontContext);
+  const { movies, setMovies, cats, doFilter, cat, setSearch } = useContext(FrontContext);
 
+  const [s, setS] = useState('');
+
+  const doSearch = e => {
+    setS(e.target.value);
+    setSearch(e.target.value);
+  }
 
   const doSort = e => {
     setSortBy(e.target.value);
@@ -39,6 +46,7 @@ function SortFilter() {
 
   return (
     <div className="card mt-4">
+      <img src="/logo1.png" class="img-fluid" alt="Responsive" />
       <div className="card-header">
         <h2>Sort and Filter</h2>
       </div>
@@ -66,6 +74,12 @@ function SortFilter() {
                     cats ? cats.map(c => <option key={c.id} value={c.id}>{c.title}</option>) : null
                   }
                 </select>
+              </div>
+            </div>
+            <div className="col-4">
+              <div className="form-group">
+                <label>Search</label>
+                <input className="form-control" type="text" value={s} onChange={doSearch} />
               </div>
             </div>
           </div>

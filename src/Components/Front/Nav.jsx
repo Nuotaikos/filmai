@@ -5,10 +5,20 @@ function Nav() {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarColor02">
-            MOVIES RENT
+            {/* MOVIES RENT */}
           </div>
         </div>
       </nav>
+      {/* 
+      <nav class="navbar navbar-dark bg-dark">
+          <img class="card-img-top" src="..." alt="Card image cap">
+        <a class="navbar-brand" href="#">
+          <img src="/img/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt=""></img>
+          {/* <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt=""> */}
+      {/* MOVIES RENT */}
+      {/* </a> */}
+      {/* </nav > * /} */}
+
       {/* ............ */}
       {/* <div className="container header">
         <div className="row">

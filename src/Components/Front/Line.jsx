@@ -18,7 +18,7 @@ function Line({ line }) {
               <th className="fs-5" scope="col">Price</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="body-text">
             <tr>
               <td>
                 {

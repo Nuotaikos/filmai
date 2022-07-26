@@ -281,7 +281,7 @@ app.get("/movies", (req, res) => {
   let sql;
   let requests;
   console.log(req.query['cat-id']);
-  if (!req.query['cat-id']) {
+  if (!req.query['cat-id'] && !req.query['s']) {
     sql = `
       SELECT m.id, c.id AS cid, price, m.title, rates, rate_sum, c.title AS cat, photo
       FROM movies AS m
@@ -290,7 +290,7 @@ app.get("/movies", (req, res) => {
       ORDER BY title
       `;
     requests = [];
-  } else {
+  } else if (req.query['cat-id']) {
     sql = `
       SELECT m.id, c.id AS cid, price, m.title, rates, rate_sum, c.title AS cat, photo
       FROM movies AS m
@@ -300,6 +300,16 @@ app.get("/movies", (req, res) => {
       ORDER BY title
       `;
     requests = [req.query['cat-id']];
+  } else {
+    sql = `
+    SELECT m.id, c.id AS cid, price, m.title, rates, rate_sum, c.title AS cat, photo
+    FROM movies AS m
+    LEFT JOIN cats AS c
+    ON c.id = m.cats_id
+    WHERE m.title LIKE ? 
+    ORDER BY title
+    `;
+    requests = ['%' + req.query['s'] + '%'];
   }
 
   con.query(sql, requests, (err, result) => {
