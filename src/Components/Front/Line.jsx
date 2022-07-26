@@ -1,9 +1,16 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import FrontContext from "./FrontContext";
 
 function Line({ line }) {
 
-  const { doFilter } = useContext(FrontContext);
+  const { doFilter, setAddCom } = useContext(FrontContext);
+
+  const [com, setCom] = useState('');
+
+
+  const addComment = () => {
+    setAddCom({ movie_id: line.id, com })
+  }
 
   return (
     <div class="container text-center">
@@ -16,6 +23,7 @@ function Line({ line }) {
               <th className="fs-5" scope="col">Category</th>
               <th className="fs-5" scope="col">Rate</th>
               <th className="fs-5" scope="col">Price</th>
+              <th className="fs-5" scope="col">Comments</th>
             </tr>
           </thead>
           <tbody className="body-text">
@@ -33,6 +41,15 @@ function Line({ line }) {
                 }
               </td>
               <td>{line.price.toFixed(2)} Eur</td>
+              <td>
+                {/* <div className="comments"> */}
+                {/* <h5>Comments</h5> */}
+                <div className="form-group">
+                  <textarea className="form-control" rows="3" value={com} onChange={e => setCom(e.target.value)}></textarea>
+                </div>
+                <button type="button" className="btn btn-outline-primary mt-2" onClick={addComment}>Add comment</button>
+                {/* </div> */}
+              </td>
             </tr>
           </tbody>
         </table>

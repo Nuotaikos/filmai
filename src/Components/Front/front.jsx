@@ -17,6 +17,9 @@ function Front() {
 
   const [search, setSearch] = useState('');
 
+  const [addCom, setAddCom] = useState(null);
+  const [lastUpdate, setLastUpdate] = useState(Date.now());
+
   const doFilter = cid => {
     setCat(cid);
     setFilter(parseInt(cid));
@@ -35,12 +38,20 @@ function Front() {
 
     axios.get('http://localhost:3003/movies' + query, authConfig())
       .then(res => setMovies(res.data.map((p, i) => ({ ...p, row: i }))));
-  }, [filter, search]);
+  }, [filter, search, lastUpdate]);
 
   useEffect(() => {
     axios.get('http://localhost:3003/cats', authConfig())
       .then(res => setCats(res.data));
   }, []);
+
+  useEffect(() => {
+    if (null === addCom) return;
+    axios.post('http://localhost:3003/comments', addCom, authConfig())
+      .then(res => {
+        setLastUpdate(Date.now());
+      })
+  }, [addCom]);
 
   return (
     <FrontContext.Provider value={{
@@ -51,7 +62,8 @@ function Front() {
       cat,
       setCat,
       doFilter,
-      setSearch
+      setSearch,
+      setAddCom
     }}>
       <Nav />
       <div className="container">
