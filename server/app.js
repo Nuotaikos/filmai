@@ -331,6 +331,19 @@ ORDER BY title
   });
 });
 
+// Comments
+app.post("/comments", (req, res) => {
+  const sql = `
+  INSERT INTO comments
+  (com, movie_id)
+  VALUES (?, ?)
+  `;
+  con.query(sql, [req.body.com, req.body.movie_id,], (err, result) => {
+    if (err) throw err;
+    res.send({ result });
+  });
+});
+
 app.listen(port, () => {
   console.log(`Filmus rodo portas Nr ${port}`);
 });

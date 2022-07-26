@@ -9,7 +9,8 @@ function Line({ line }) {
 
 
   const addComment = () => {
-    setAddCom({ movie_id: line.id, com })
+    setAddCom({ movie_id: line.id, com });
+    setCom('');
   }
 
   return (
