@@ -37,7 +37,35 @@ function Front() {
     }
 
     axios.get('http://localhost:3003/movies' + query, authConfig())
-      .then(res => setMovies(res.data.map((p, i) => ({ ...p, row: i }))));
+      // .then(res =>  setMovies(res.data.map((p, i) => ({ ...p, row: i }))));
+      .then(res => {
+        const movies = new Map();
+        res.data.forEach(m => {
+          let comment;
+          if (null === m.com) {
+            comment = null;
+          } else {
+            comment = { id: m.com_id, com: m.com };
+          }
+          if (movies.has(m.id)) {
+            const mo = movies.get(m.id);
+            if (comment) {
+              mo.com.push(comment);
+            }
+          } else {
+            movies.set(m.id, { ...m });
+            const mo = movies.get(m.id);
+            mo.com = [];
+            delete mo.com_id;
+            if (comment) {
+              mo.com.push(comment);
+            }
+          }
+        });
+        console.log([...movies].map(e => e[1]));
+        setMovies([...movies].map(e => e[1]).map((m, i) => ({ ...m, row: i })));
+      })
+
   }, [filter, search, lastUpdate]);
 
   useEffect(() => {

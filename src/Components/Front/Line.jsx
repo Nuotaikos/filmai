@@ -13,6 +13,7 @@ function Line({ line }) {
     setCom('');
   }
 
+
   return (
     <div class="container text-center">
       <div class="table-wrapper">
@@ -24,7 +25,8 @@ function Line({ line }) {
               <th className="fs-5" scope="col">Category</th>
               <th className="fs-5" scope="col">Rate</th>
               <th className="fs-5" scope="col">Price</th>
-              <th className="fs-5" scope="col">Comments</th>
+              <th className="fs-5" scope="col">All comments</th>
+              <th className="fs-5" scope="col">Add Comment</th>
             </tr>
           </thead>
           <tbody className="body-text">
@@ -43,13 +45,20 @@ function Line({ line }) {
               </td>
               <td>{line.price.toFixed(2)} Eur</td>
               <td>
-                {/* <div className="comments"> */}
-                {/* <h5>Comments</h5> */}
+                {/* <div className="form-group comments m-12">
+                  <h5>Comments</h5> */}
+                <ul className="list-group">
+                  {
+                    line.com.map(c => <li key={c.id} className="list-group-item">{c.com}</li>)
+                  }
+                </ul>
+                {/* </div> */}
+              </td>
+              <td>
                 <div className="form-group">
                   <textarea className="form-control" rows="3" value={com} onChange={e => setCom(e.target.value)}></textarea>
                 </div>
-                <button type="button" className="btn btn-outline-primary mt-2" onClick={addComment}>Add comment</button>
-                {/* </div> */}
+                <button type="button" className="btn btn-outline-primary mt-2" onClick={addComment}>ADD</button>
               </td>
             </tr>
           </tbody>

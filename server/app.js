@@ -283,29 +283,35 @@ app.get("/movies", (req, res) => {
   console.log(req.query['cat-id']);
   if (!req.query['cat-id'] && !req.query['s']) {
     sql = `
-      SELECT m.id, c.id AS cid, price, m.title, rates, rate_sum, c.title AS cat, photo
+      SELECT com.id AS com_id, com, m.id, c.id AS cid, price, m.title, rates, rate_sum, c.title AS cat, photo
       FROM movies AS m
       LEFT JOIN cats AS c
       ON c.id = m.cats_id
+      LEFT JOIN comments AS com
+      ON m.id = com.movie_id
       ORDER BY title
       `;
     requests = [];
   } else if (req.query['cat-id']) {
     sql = `
-      SELECT m.id, c.id AS cid, price, m.title, rates, rate_sum, c.title AS cat, photo
+      SELECT com.id AS com_id, com, m.id, c.id AS cid, price, m.title, rates, rate_sum, c.title AS cat, photo
       FROM movies AS m
       LEFT JOIN cats AS c
       ON c.id = m.cats_id
+      LEFT JOIN comments AS com
+      ON m.id = com.movie_id
       WHERE m.cats_id = ?
       ORDER BY title
       `;
     requests = [req.query['cat-id']];
   } else {
     sql = `
-    SELECT m.id, c.id AS cid, price, m.title, rates, rate_sum, c.title AS cat, photo
+    SELECT com.id AS com_id, com, m.id, c.id AS cid, price, m.title, rates, rate_sum, c.title AS cat, photo
     FROM movies AS m
     LEFT JOIN cats AS c
     ON c.id = m.cats_id
+    LEFT JOIN comments AS com
+    ON m.id = com.movie_id
     WHERE m.title LIKE ? 
     ORDER BY title
     `;
